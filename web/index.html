@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 交互页面版</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="app-shell" aria-label="2048 交互页面版">
+        <section class="game-area" aria-label="2048 棋盘">
+            <header class="top-bar">
+                <div class="brand">
+                    <div class="brand-mark" aria-hidden="true">2048</div>
+                    <div>
+                        <h1>2048</h1>
+                        <p>Interactive Edition</p>
+                    </div>
+                </div>
+                <button class="icon-button restart-top" id="restartTop" type="button" aria-label="重新开始" title="重新开始">
+                    ↻
+                </button>
+            </header>
+
+            <div class="board-frame">
+                <div class="board" id="board" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <aside class="side-panel" aria-label="游戏状态与控制">
+            <div class="score-grid">
+                <div class="score-box">
+                    <span>分数</span>
+                    <strong id="score">0</strong>
+                </div>
+                <div class="score-box best">
+                    <span>最高分</span>
+                    <strong id="bestScore">0</strong>
+                </div>
+                <div class="score-box">
+                    <span>步数</span>
+                    <strong id="moves">0</strong>
+                </div>
+                <div class="score-box target">
+                    <span>最大数字</span>
+                    <strong id="maxTile">2</strong>
+                </div>
+            </div>
+
+            <div class="progress-wrap" aria-label="2048 目标进度">
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-label">
+                    <span>2</span>
+                    <span>2048</span>
+                </div>
+            </div>
+
+            <div class="status-panel" id="status" role="status" aria-live="polite">
+                已生成初始棋盘
+            </div>
+
+            <div class="controls" aria-label="移动按钮">
+                <button class="control-button up" data-direction="up" type="button" aria-label="上移" title="上移">↑</button>
+                <button class="control-button left" data-direction="left" type="button" aria-label="左移" title="左移">←</button>
+                <button class="control-button down" data-direction="down" type="button" aria-label="下移" title="下移">↓</button>
+                <button class="control-button right" data-direction="right" type="button" aria-label="右移" title="右移">→</button>
+            </div>
+
+            <div class="action-row">
+                <button class="action-button" id="restart" type="button" aria-label="重新开始" title="重新开始">
+                    <span aria-hidden="true">↻</span>
+                    重新开始
+                </button>
+            </div>
+        </aside>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

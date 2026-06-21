@@ -25,6 +25,7 @@ private:
     bool isRunning;
     bool hasWon;
     bool isGameOver;
+    int moveCount;
     std::string statusMessage;
 };
 

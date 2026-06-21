@@ -1,11 +1,48 @@
 #include "InputHandler.h"
 
 #include <cctype>
+#include <cstdio>
 #include <iostream>
 #include <string>
 
+#ifdef _WIN32
+#include <conio.h>
+#include <io.h>
+#endif
+
 char InputHandler::getInput() const {
-    std::cout << "\n请输入操作：";
+    std::cout << "\n请选择操作：";
+
+#ifdef _WIN32
+    if (_isatty(_fileno(stdin))) {
+        int ch = _getch();
+
+        if (ch == 0 || ch == 224) {
+            int arrow = _getch();
+            switch (arrow) {
+            case 72:
+                std::cout << "↑\n";
+                return 'w';
+            case 80:
+                std::cout << "↓\n";
+                return 's';
+            case 75:
+                std::cout << "←\n";
+                return 'a';
+            case 77:
+                std::cout << "→\n";
+                return 'd';
+            default:
+                std::cout << "\n";
+                return '\n';
+            }
+        }
+
+        std::cout << static_cast<char>(ch) << "\n";
+        return static_cast<char>(ch);
+    }
+#endif
+
     std::string line;
     if (!std::getline(std::cin, line)) {
         return 'q';

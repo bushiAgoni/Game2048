@@ -24,6 +24,7 @@ public:
     bool canMove() const;
     bool has2048() const;
     bool hasEmptyCell() const;
+    int getMaxTile() const;
     std::vector<std::pair<int, int>> getEmptyCells() const;
     void addRandomTile();
 

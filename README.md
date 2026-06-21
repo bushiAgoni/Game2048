@@ -4,14 +4,22 @@
 
 本项目是一个基于 C++17 的 2048 控制台版游戏，适合作为“C++ 面向对象程序设计”课程设计提交。项目不使用 EasyX 或其他第三方图形库，重点展示类封装、职责划分、对象协作和核心算法复用。
 
+GitHub 公开仓库地址：
+
+```text
+https://github.com/bushiAgoni/Game2048
+```
+
 ## 功能特点
 
 - 4 x 4 棋盘，初始随机生成两个数字。
 - 支持 W/A/S/D 控制上下左右移动。
+- Windows 终端下支持方向键移动和单键输入，不需要每次按回车。
 - 支持 R 重新开始，Q 退出游戏。
 - 相同数字按移动方向合并，每个格子一次移动最多合并一次。
 - 有效移动后才随机生成新数字，无效移动不会生成新数字。
-- 实时显示当前分数、最高分和操作提示。
+- C++ 控制台界面使用 ANSI 彩色方块、分数卡片、目标进度条和状态面板。
+- 实时显示当前分数、最高分、步数、最大数字和操作提示。
 - 出现 2048 时提示胜利，棋盘已满且无法移动时提示失败。
 - 提供多文件版和单文件整合版，便于课堂提交和快速运行。
 
@@ -62,13 +70,13 @@ Game2048/
 |---|---|
 | `include/Game.h`, `src/Game.cpp` | 游戏主控制类，负责主循环、输入处理、胜负判断、重新开始和退出。 |
 | `include/Board.h`, `src/Board.cpp` | 棋盘类，负责 4 x 4 数据存储、移动、合并、随机生成数字和可移动判断。 |
-| `include/Renderer.h`, `src/Renderer.cpp` | 控制台显示类，负责打印棋盘、分数、提示信息、胜利和失败提示。 |
-| `include/InputHandler.h`, `src/InputHandler.cpp` | 输入处理类，负责读取输入、判断合法性、转换为游戏命令和方向。 |
+| `include/Renderer.h`, `src/Renderer.cpp` | 彩色控制台显示类，负责打印棋盘、分数卡片、目标进度条、状态面板和操作面板。 |
+| `include/InputHandler.h`, `src/InputHandler.cpp` | 输入处理类，负责读取输入、判断合法性、转换为游戏命令和方向，Windows 下支持方向键。 |
 | `include/ScoreManager.h`, `src/ScoreManager.cpp` | 分数管理类，负责当前分数和运行期最高分。 |
 | `include/RandomGenerator.h`, `src/RandomGenerator.cpp` | 随机数类，负责随机位置和 2/4 数字生成。 |
 | `src/main.cpp` | 多文件版程序入口。 |
 | `single_file/main.cpp` | 单文件整合版，可以单独复制编译运行。 |
-| `web/index.html`, `web/styles.css`, `web/app.js` | 彩色按钮交互页面版，支持鼠标点击方向键操作。 |
+| `web/index.html`, `web/styles.css`, `web/app.js` | 附加彩色按钮交互页面版，仅作为可视化展示扩展，不替代 C++ 主程序。 |
 | `docs/项目设计文档.md` | 完整中文设计文档，包含需求、设计、算法、流程图、UML、测试和总结。 |
 | `docs/测试报告.md` | 独立测试报告，便于提交或截图。 |
 | `docs/答辩讲解提纲.md` | 课程答辩汇报提纲。 |
@@ -105,7 +113,7 @@ g++ -std=c++17 -Wall -Wextra single_file/main.cpp -o 2048_single.exe
 
 网页交互版：
 
-直接打开 `web/index.html`，即可使用页面上的方向按钮进行操作。
+`web/` 目录是附加展示页面，主体课程作业仍然是 C++ 控制台程序。直接打开 `web/index.html`，即可使用页面上的方向按钮进行操作。
 
 如果浏览器限制直接打开本地文件，也可以用本地预览服务：
 
@@ -130,6 +138,7 @@ py -m http.server 5500 --bind 127.0.0.1
 | `A` 或 `a` | 左移 |
 | `S` 或 `s` | 下移 |
 | `D` 或 `d` | 右移 |
+| 方向键 | Windows 终端下可直接移动 |
 | `R` 或 `r` | 重新开始 |
 | `Q` 或 `q` | 退出游戏 |
 
@@ -149,8 +158,8 @@ py -m http.server 5500 --bind 127.0.0.1
 
 - `Game`：协调其他对象，管理主循环和游戏状态。
 - `Board`：封装棋盘数据和移动合并算法。
-- `Renderer`：封装控制台输出。
-- `InputHandler`：封装输入解析。
+- `Renderer`：封装彩色控制台输出，包括棋盘、分数卡片、进度条、状态面板和操作面板。
+- `InputHandler`：封装输入解析，Windows 下支持 `_getch()` 单键输入和方向键。
 - `ScoreManager`：封装分数管理。
 - `RandomGenerator`：封装随机数生成。
 
@@ -181,5 +190,5 @@ g++ -std=c++17 -Wall -Wextra single_file/main.cpp -o 2048_single.exe
 - 增加最高分本地文件保存功能。
 - 增加撤销一步功能。
 - 增加不同棋盘大小选择。
-- 增加 EasyX 图形界面或跨平台 GUI 版本。
+- 增加 EasyX 图形界面或跨平台 GUI 版本；当前 `web/` 目录仅作为附加可视化展示。
 - 增加自动化单元测试入口，便于验证移动合并算法。

@@ -10,6 +10,7 @@ Game::Game()
       isRunning(true),
       hasWon(false),
       isGameOver(false),
+      moveCount(0),
       statusMessage("游戏开始：已随机生成两个数字。") {
 }
 
@@ -17,12 +18,15 @@ void Game::run() {
     renderer.showWelcome();
 
     while (isRunning) {
-        renderer.render(board, scoreManager.getScore(), scoreManager.getBestScore());
-        renderer.showMessage(statusMessage);
-
-        if (isGameOver) {
-            renderer.showGameOver();
-        }
+        renderer.render(
+            board,
+            scoreManager.getScore(),
+            scoreManager.getBestScore(),
+            moveCount,
+            statusMessage,
+            isGameOver,
+            hasWon
+        );
 
         char input = inputHandler.getInput();
         processInput(input);
@@ -36,6 +40,7 @@ void Game::restart() {
     scoreManager.resetScore();
     hasWon = false;
     isGameOver = false;
+    moveCount = 0;
     statusMessage = "已重新开始游戏。";
 }
 
@@ -58,6 +63,7 @@ void Game::processInput(char input) {
         }
 
         scoreManager.addScore(gainedScore);
+        ++moveCount;
         statusMessage = gainedScore > 0
             ? "有效移动，合并得分 +" + std::to_string(gainedScore) + "。"
             : "有效移动，已生成一个新数字。";

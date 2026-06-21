@@ -176,6 +176,20 @@ bool Board::hasEmptyCell() const {
     return false;
 }
 
+int Board::getMaxTile() const {
+    int maxTile = 0;
+
+    for (const auto& row : grid) {
+        for (int value : row) {
+            if (value > maxTile) {
+                maxTile = value;
+            }
+        }
+    }
+
+    return maxTile;
+}
+
 std::vector<std::pair<int, int>> Board::getEmptyCells() const {
     std::vector<std::pair<int, int>> emptyCells;
 
